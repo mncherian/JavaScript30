@@ -38,22 +38,21 @@ function checkSearch(search, data)  {
   });
 }
 
-function createList(text) {
-  let listItem = document.createElement('li');
-  listItem.textContent = text;
-  suggestions.appendChild(listItem);
+function createList(event) {
+  const matchedList = checkSearch(event.target.value, resData);
+  const html = matchedList.map(function(place) {
+    return `
+      <li>
+        <span class="name">${place.city}, ${place.state}</span>
+        <span class="population">${place.population}</span>
+      </li>
+    `;
+  }).join('');
+  suggestions.innerHTML = html;
 }
 
-// function checkSearch(event)  {
-//   resData.forEach(function(item)  {
-//     if (item.city.includes(event.target.value)) {
-//       createList(item.city);
-//     }
-//   });
-// }
-
 searchBox.addEventListener('input', function(event)  {
-  console.log(event.target.value);
+  createList(event);
 });
 </script>
 </body>
